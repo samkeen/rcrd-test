@@ -22,6 +22,7 @@ class interest extends Domain {
 	    )
         );
     }
+    
     public function before_save() {
 	$this->set_data('url_slug',preg_replace('/\W/', '_',$this->data('name')));
 	return true;
@@ -31,10 +32,12 @@ class interest extends Domain {
      * @return string
      */
     public function process_action(Request $request) {
-	if($this->store_file_upload()) {
+        $response = null;
+	if(in_array($request->requested_action,array('add','edit')) && $this->store_file_upload($request)) {
 	    // set the is_templated_response to true
 	    return parent::process_action($request, true);
 	}
+        return parent::process_action($request);
     }
     /**
      *
@@ -50,5 +53,14 @@ class interest extends Domain {
 	ob_start();
 	include "domains/templates/file_upload_response.php";
 	return ob_get_clean();
+    }
+    /**
+     * extra is added to the data result array of any get calls for a domain
+     * @param array $result_data
+     * @return array This should be the original $result_data with any mutations
+     */
+    public static function extra($result_data) {
+        $result_data['image_uri'] = BASE_URL."/uploads/{$result_data['file_name']}";
+        return $result_data;
     }
 }

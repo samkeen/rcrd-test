@@ -175,16 +175,16 @@ class Domain {
      * process_action().
      * @return boolean success of the file upload
      */
-    public function store_file_upload() {
+    public function store_file_upload(Request $request) {
 	$file_name_parts = pathinfo(basename(current($_FILES[$this->name]['name'])));
 	$this->logger->debug(__METHOD__. " \$file_name_parts : ".print_r($file_name_parts,1));
 	$file_name = preg_replace('/\W/', '_',$file_name_parts['filename']).".{$file_name_parts['extension']}";
-	$upload_file = $this->base_dir.self::FILE_UPLOAD_DIR.'/'.$file_name;
+	$upload_file = $request->base_dir.self::FILE_UPLOAD_DIR.'/'.$file_name;
 	if (move_uploaded_file(current($_FILES[$this->name]['tmp_name']), $upload_file)) {
 	    $this->logger->debug(__METHOD__. " File successfully uploaded to [{$upload_file}]: ".print_r($_FILES,1));
-	    $this->calculated_data[$this->domain_request->requested_action]['file_name'] = $file_name;
-	    $this->calculated_data[$this->domain_request->requested_action]['file_type'] = current($_FILES[$this->name]['type']);
-	    $this->calculated_data[$this->domain_request->requested_action]['file_size'] = current($_FILES[$this->name]['size']);
+	    $this->calculated_data[$request->requested_action]['file_name'] = $file_name;
+	    $this->calculated_data[$request->requested_action]['file_type'] = current($_FILES[$this->name]['type']);
+	    $this->calculated_data[$request->requested_action]['file_size'] = current($_FILES[$this->name]['size']);
 	} else {
 	    $this->logger->error(__METHOD__. " File not uploaded to [{$upload_file}] ".print_r($_FILES,1));
 	    $upload_file = null;
@@ -265,12 +265,12 @@ class Domain {
      * @param mixed $value
      */
     public function  __set($attribute_name, $value) {
-        $settables = array('id','ext','sibling','parent');
+        $settables = array('id','ext','sibling','parent','name');
         if(in_array($attribute_name,$settables)) {
             if($attribute_name=='id'){
                 $this->id = (int)$value?(int)$value:null;
             } else {
-                $this->$name = $value;
+                $this->$attribute_name = $value;
             }
         } else {
             $this->logger->error(__METHOD__. "attempting to set unsettable [$attribute_name] to value [$value]");

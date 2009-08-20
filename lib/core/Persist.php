@@ -140,6 +140,10 @@ class Persist {
 	foreach ($this->parent_domains($domains) as $parent_domain) {
 //	    if($this->parent_related_to_sibling($parent_domain,$sibling_domain)) {
 		$result[$parent_domain->name] = $this->find_by_id($parent_domain->name, $parent_domain->id);
+                $updated_result = call_user_func(array($parent_domain->name,'extra'),$result[$parent_domain->name]);
+                if($updated_result) {
+                    $result[$parent_domain->name] = $updated_result;
+                }
 //	    }
 	}
         return $result;

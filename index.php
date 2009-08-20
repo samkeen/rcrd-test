@@ -8,6 +8,7 @@ require "core/Request.php";
 require "core/Response.php";
 require "core/Domain.php";
 $logger = new Logger(Logger::DEBUG,'./log/app.log');
+define('BASE_URL',"http://{$_SERVER['HTTP_HOST']}");
 $domain_request = new Request(dirname(__FILE__));
 //Response::send_client_error_exit($domain_request, Response::BAD_REQUEST,"Testing send client error exit");
 $logger->debug('Seeing $domain_request:'.print_r($domain_request,1));

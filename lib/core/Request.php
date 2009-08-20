@@ -71,13 +71,13 @@ class Request {
      * @param array $submitted_GET
      * @param array $submitted_POST
      */
-    public function  __construct($base_dir, array $submitted_GET=null, array $submitted_POST=null ) {
+    public function  __construct($base_dir) {
 	global $logger;
 	$this->logger = $logger;
-	$this->_get = $submitted_GET!==null?$submitted_GET:$_GET;
-	$this->_post = $submitted_POST!==null?$submitted_POST:$_POST;
+	$this->_get = $_GET;
+	$this->_post = $_POST;
 	$this->base_dir = $base_dir;
-	$this->logger->debug('Seeing $this->_get[]:'.print_r($this->_get,1));
+        $this->logger->debug('Seeing $this->_get[]:'.print_r($this->_get,1));
 	if(! $this->parse_request_url('/'.$this->_get[';c;']) ) {
             Response::send_client_error_exit($this, Response::BAD_REQUEST, "Unable to parse request URL [{$this->_get[';c;']}]");
 	}
