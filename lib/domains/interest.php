@@ -13,7 +13,7 @@ class interest extends Domain {
             ),
             'input_sources' => array(
                 'get' => INPUT_GET,
-                'add' => INPUT_GET,
+                'add' => INPUT_POST,
                 'edit' => INPUT_GET,
                 'delete' => INPUT_GET
             ),
