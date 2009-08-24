@@ -78,6 +78,7 @@ class Request {
 	$this->_post = $_POST;
 	$this->base_dir = $base_dir;
         $this->logger->debug('Seeing $this->_get[]:'.print_r($this->_get,1));
+        $this->logger->debug('Seeing $this->_post[]:'.print_r($this->_post,1));
 	if(! $this->parse_request_url('/'.$this->_get[';c;']) ) {
             Response::send_client_error_exit($this, Response::BAD_REQUEST, "Unable to parse request URL [{$this->_get[';c;']}]");
 	}

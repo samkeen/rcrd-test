@@ -13,8 +13,8 @@ class interest extends Domain {
             ),
             'input_sources' => array(
                 'get' => INPUT_GET,
-                'add' => INPUT_POST,
-                'update' => INPUT_POST,
+                'add' => INPUT_GET,
+                'edit' => INPUT_GET,
                 'delete' => INPUT_GET
             ),
 	    'relations' => array(
@@ -33,7 +33,7 @@ class interest extends Domain {
      */
     public function process_action(Request $request) {
         $response = null;
-	if(in_array($request->requested_action,array('add','edit')) && $this->store_file_upload($request)) {
+	if(in_array($request->requested_action,array('add','edit')) && $_FILES && $this->store_file_upload($request)) {
 	    // set the is_templated_response to true
 	    return parent::process_action($request, true);
 	}
