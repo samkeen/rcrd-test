@@ -3,8 +3,15 @@
   <head>
     <title></title>
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <script type="text/javascript">
+    <!--
+    function delayer(){
+        window.location = "<?php echo($return_uri); ?>";
+    }
+    //-->
+    </script>
   </head>
-  <body>
+  <body onLoad="setTimeout('delayer()', 5000)">
       <h1>We have recieved your file</h1>
       <p>So we are sending you back to the complettion URI you application supplied us</p>
       <a href="<?php echo($return_uri); ?>"><?php echo($return_uri); ?></a>
