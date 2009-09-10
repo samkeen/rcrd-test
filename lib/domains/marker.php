@@ -9,7 +9,7 @@ class marker extends Domain {
                 'interest_id'  => array('filter'=>FILTER_VALIDATE_INT),
                 'coordinate_label' => array('filter'=>FILTER_SANITIZE_STRING),
                 'coordinate_description' => array('filter'=>FILTER_SANITIZE_STRING),
-                'marker_size' => array('filter'=>FILTER_VALIDATE_INT),
+                'marker_size' => array('filter'=>FILTER_SANITIZE_STRING),
                 'marker_color' => array('filter'=>FILTER_SANITIZE_STRING),
                 'coordinate_x'   => array('filter'=>FILTER_VALIDATE_INT),
                 'coordinate_y'   => array('filter'=>FILTER_VALIDATE_INT),
